@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="8dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:scaleType="centerCrop"
+        android:src="@drawable/movie_place_holder"
+        android:id="@+id/movie_item_poster_iv"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:layout_marginTop="5dp"
+        android:id="@+id/movie_item_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text="Title"
+        tools:text="Transformers: Age of Extinction"
+        app:layout_constraintStart_toEndOf="@+id/movie_item_poster_iv"
+        app:layout_constraintTop_toTopOf="@+id/movie_item_poster_iv" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

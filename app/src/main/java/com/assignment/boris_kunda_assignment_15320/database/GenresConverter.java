@@ -9,12 +9,12 @@ import java.util.stream.Collectors;
 public class GenresConverter {
 
     @TypeConverter
-    String fromGenres (List<String> iGenreList) {
+    public String fromGenres (List<String> iGenreList) {
         return iGenreList.stream().collect(Collectors.joining(","));
     }
 
     @TypeConverter
-    List<String> toGenres (String data) {
+    public List<String> toGenres (String data) {
         return Arrays.asList(data.split(","));
     }
 

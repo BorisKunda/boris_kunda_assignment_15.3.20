@@ -13,6 +13,8 @@ import com.assignment.boris_kunda_assignment_15320.viewmodel.MovieViewModel;
 
 public class SplashActivity extends AppCompatActivity {
 
+    // TODO: 3/16/2020  add method to utils which setViewModel
+
     private Handler mHandler;
     private Intent mMainActivityIntent;
     private final int SPLASH_TIME = 3000;
@@ -23,8 +25,7 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        setViewModel();
-
+        mMovieViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication())).get(MovieViewModel.class);
 
         Log.e(getClass().getSimpleName(), "onCreate");
 
@@ -37,18 +38,15 @@ public class SplashActivity extends AppCompatActivity {
             }
         });
 
-        //mHandler = new Handler();
+        mHandler = new Handler();
 
-        //        mHandler.postDelayed(() -> {
-        //            mMainActivityIntent = new Intent(SplashActivity.this, MainActivity.class);
-        //            //finish();
-        //            //startActivity(mMainActivityIntent);
-        //        }, SPLASH_TIME);
+        mHandler.postDelayed(() -> {
+            mMainActivityIntent = new Intent(SplashActivity.this, MainActivity.class);
+             finish();
+              startActivity(mMainActivityIntent);
+        }, SPLASH_TIME);
 
     }
 
-    private void setViewModel () {
-        mMovieViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication())).get(MovieViewModel.class);
-    }
 
 }

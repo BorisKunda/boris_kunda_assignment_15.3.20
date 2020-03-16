@@ -34,6 +34,7 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$rootProject.appcompat"
     implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintlayout"
     implementation "androidx.legacy:legacy-support-v4:$rootProject.legacy_support_v4"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation "junit:junit:$rootProject.junit"
     androidTestImplementation "androidx.test.ext:junit:$rootProject.test_ext_junit"
     androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.espresso_core"
