@@ -50,7 +50,7 @@ public class MovieRepository {
         mCountryApi.requestMovieList((isSuccess, response) -> {
 
             if (isSuccess) {
-                Log.e(getClass().getSimpleName(), "loadMoviesListFromApi");
+
                 Gson gson = new Gson();
                 Movie[] movies = gson.fromJson(String.valueOf(response), Movie[].class);
 

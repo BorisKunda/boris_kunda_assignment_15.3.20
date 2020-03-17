@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.assignment.boris_kunda_assignment_15320.R;
 import com.assignment.boris_kunda_assignment_15320.model.Movie;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,9 +19,11 @@ import java.util.List;
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
 
     private List<Movie> mMovieList;
+    private OnMovieClickListener mOnMovieClickListener;
 
-    public MovieAdapter () {
+    public MovieAdapter (OnMovieClickListener iOnMovieClickListener) {
         mMovieList = new ArrayList<>();
+        mOnMovieClickListener = iOnMovieClickListener;
     }
 
     @NonNull
@@ -33,8 +36,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     @Override
     public void onBindViewHolder (@NonNull MovieViewHolder holder, int position) {
         Movie movie = mMovieList.get(position);
+        holder.bind(mMovieList.get(position), mOnMovieClickListener);
         holder.mMovieTitleTv.setText(movie.getTitle());
-        // TODO: 3/16/2020 image
+        Picasso.get().load(movie.getImageUrl()).placeholder(R.drawable.movie_place_holder).into(holder.mMoviePosterIv);
     }
 
     @Override
@@ -44,13 +48,17 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     class MovieViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView mMovieTitleTv;
-        private ImageView mMoviePosterIv;
+        TextView mMovieTitleTv;   // TODO: 3/17/2020 check if thes variables can be set to private
+        private ImageView mMoviePosterIv;   // TODO: 3/17/2020 check if thes variables can be set to private
 
         MovieViewHolder (@NonNull View itemView) {
             super(itemView);
             mMovieTitleTv = itemView.findViewById(R.id.movie_item_title_tv);
             mMoviePosterIv = itemView.findViewById(R.id.movie_item_poster_iv);
+        }
+
+        void bind (Movie iMovie, OnMovieClickListener iOnMovieClickListener) {
+            itemView.setOnClickListener(v -> mOnMovieClickListener.onMovieClick(iMovie));
         }
 
     }
@@ -59,5 +67,12 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         mMovieList = iMovieList;
         notifyDataSetChanged();
     }
+
+    public interface OnMovieClickListener {
+
+        void onMovieClick (Movie iMovie);
+
+    }
+
 
 }

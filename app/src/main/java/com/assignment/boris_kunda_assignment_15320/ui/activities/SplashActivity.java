@@ -15,9 +15,11 @@ public class SplashActivity extends AppCompatActivity {
 
     // TODO: 3/16/2020  add method to utils which setViewModel
 
+    // TODO: 3/17/2020 finish splash screen
+
     private Handler mHandler;
     private Intent mMainActivityIntent;
-    private final int SPLASH_TIME = 3000;
+    private final int SPLASH_TIME = 0;
     private MovieViewModel mMovieViewModel;
 
     @Override
@@ -25,16 +27,16 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        mMovieViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication())).get(MovieViewModel.class);
+       mMovieViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication())).get(MovieViewModel.class);
 
-        Log.e(getClass().getSimpleName(), "onCreate");
+
 
         mMovieViewModel.getMovieListLD().observe(this, iMovies -> {
             if (iMovies.size() == 0) {
-                Log.e("DB_EMPTY", "onChanged");
+
                 mMovieViewModel.loadMoviesList();
             } else {
-                Log.e("DB_FULL", "onChanged");
+
             }
         });
 

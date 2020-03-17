@@ -45,5 +45,7 @@ dependencies {
     implementation "com.android.volley:volley:$rootProject.volley"
     implementation "androidx.room:room-runtime:$rootProject.room_version"
     annotationProcessor "androidx.room:room-compiler:$rootProject.room_version"
+    implementation "com.squareup.picasso:picasso:$rootProject.picasso"
+    implementation "com.google.android.material:material:$rootProject.appcompat"
 
 }
