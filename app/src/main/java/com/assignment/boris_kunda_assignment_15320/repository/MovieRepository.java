@@ -1,9 +1,9 @@
 package com.assignment.boris_kunda_assignment_15320.repository;
 
 import android.app.Application;
-import android.util.Log;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.assignment.boris_kunda_assignment_15320.database.MovieDao;
 import com.assignment.boris_kunda_assignment_15320.database.MovieDatabase;
@@ -23,6 +23,7 @@ public class MovieRepository {
     private MovieDatabase mMovieDatabase;
     private MovieDao mDao;
     private ExecutorService mExecutorService;
+    private MutableLiveData<Boolean> mDisplayMovieAlreadyExistsPopUpMd;
 
 
     private MovieRepository (Application iApplication) {
@@ -30,6 +31,7 @@ public class MovieRepository {
         mMovieDatabase = MovieDatabase.getMovieDatabase(iApplication);
         mDao = mMovieDatabase.getMovieDao();
         mExecutorService = Executors.newSingleThreadExecutor();
+        mDisplayMovieAlreadyExistsPopUpMd = new MutableLiveData<>();
     }
 
     public static MovieRepository getMovieRepository (Application iApplication) {
@@ -43,6 +45,10 @@ public class MovieRepository {
 
     public LiveData<List<Movie>> getMoviesListLD () {
         return mDao.getMoviesList();
+    }
+
+    public int getNumberOfRowsWithThisKey (String iMovieTitle) {
+        return mDao.getNumberOfRowsWithThisKey(iMovieTitle);
     }
 
     public void loadMoviesListFromApi () {
@@ -61,6 +67,18 @@ public class MovieRepository {
             }
 
         });
+    }
+
+    public void updateDbOrDisplayPopUp (Movie iMovie) {
+        if ((mMovieRepository.getNumberOfRowsWithThisKey(iMovie.getTitle())) != 0) {
+            mDisplayMovieAlreadyExistsPopUpMd.postValue(true);
+        } else {
+            mDao.insertMovie(iMovie);
+        }
+    }
+
+    public MutableLiveData<Boolean> displayMovieAlreadyExistsPopUpMd () {
+        return mDisplayMovieAlreadyExistsPopUpMd;
     }
 
 }

@@ -13,19 +13,34 @@ import java.util.List;
 
 public class MovieViewModel extends AndroidViewModel {
 
+    // TODO: 3/19/2020 check about single Live-data
+
+
     private MovieRepository mMovieRepository;
+
 
     public MovieViewModel (@NonNull Application application) {
         super(application);
         mMovieRepository = MovieRepository.getMovieRepository(application);
+
     }
 
+    //getters
     public LiveData<List<Movie>> getMovieListLD () {
         return mMovieRepository.getMoviesListLD();
     }
 
+    public LiveData<Boolean> displayMovieExistsPopUpLd () {
+        return mMovieRepository.displayMovieAlreadyExistsPopUpMd();
+    }
+
+    //actions
     public void loadMoviesList () {
         mMovieRepository.loadMoviesListFromApi();
+    }
+
+    public void updateDbOrDisplayPopUp (Movie iMovie) {
+        mMovieRepository.updateDbOrDisplayPopUp(iMovie);// TODO: 3/18/2020 single live data
     }
 
 }

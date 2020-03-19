@@ -14,9 +14,15 @@ import java.util.List;
 public interface MovieDao {
 
     @Insert (onConflict = OnConflictStrategy.REPLACE)
-    void insertAllMovies (List<Movie> moviesList);
+    void insertAllMovies (List<Movie> iMovies);
+
+    @Insert (onConflict = OnConflictStrategy.REPLACE)
+    void insertMovie(Movie iMovie);
 
     @Query ("SELECT * from movies_table ORDER BY releaseYear DESC")
     LiveData<List<Movie>> getMoviesList ();
+
+    @Query("SELECT COUNT(*) FROM movies_table WHERE title == :iMovieTitle")
+    int getNumberOfRowsWithThisKey(String iMovieTitle);
 
 }

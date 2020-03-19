@@ -1,5 +1,6 @@
 package com.assignment.boris_kunda_assignment_15320.ui.adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,10 +21,12 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     private List<Movie> mMovieList;
     private OnMovieClickListener mOnMovieClickListener;
+    private Context mContext;
 
-    public MovieAdapter (OnMovieClickListener iOnMovieClickListener) {
+    public MovieAdapter (OnMovieClickListener iOnMovieClickListener, Context iContext) {
         mMovieList = new ArrayList<>();
         mOnMovieClickListener = iOnMovieClickListener;
+        mContext = iContext;
     }
 
     @NonNull
@@ -38,7 +41,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         Movie movie = mMovieList.get(position);
         holder.bind(mMovieList.get(position), mOnMovieClickListener);
         holder.mMovieTitleTv.setText(movie.getTitle());
-        Picasso.get().load(movie.getImageUrl()).placeholder(R.drawable.movie_place_holder).into(holder.mMoviePosterIv);
+        Picasso.get().load(movie.getImageUrl()).placeholder(R.drawable.movie_place_holder).error(R.drawable.error).into(holder.mMoviePosterIv);
     }
 
     @Override

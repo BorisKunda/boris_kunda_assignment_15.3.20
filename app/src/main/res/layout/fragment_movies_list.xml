@@ -17,10 +17,9 @@
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton3"
+        android:id="@+id/movies_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:fab_size="normal"
         android:tint="@color/white"
         android:clickable="true"
         android:src="@drawable/ic_plus_white"

@@ -1,24 +1,27 @@
 package com.assignment.boris_kunda_assignment_15320.ui.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.assignment.boris_kunda_assignment_15320.R;
 import com.assignment.boris_kunda_assignment_15320.model.Movie;
 import com.assignment.boris_kunda_assignment_15320.ui.fragments.MovieDetailsFragment;
 import com.assignment.boris_kunda_assignment_15320.ui.fragments.MoviesListFragment;
-import com.assignment.boris_kunda_assignment_15320.ui.fragments.QRFragment;
+import com.assignment.boris_kunda_assignment_15320.viewmodel.MovieViewModel;
 
-public class MainActivity extends AppCompatActivity implements MoviesListFragment.OnListItemClickedListener {
+public class MainActivity extends AppCompatActivity implements MoviesListFragment.OnListItemClickedListener, MoviesListFragment.OnFABClickedListener {
 
     private MoviesListFragment mMoviesListFragment;
     private MovieDetailsFragment mMovieDetailsFragment;
-    private QRFragment mQrFragment;
     private FragmentManager mFragmentManager;
+    MovieViewModel mMovieViewModel;
 
     @Override
     protected void onCreate (Bundle savedInstanceState) {
@@ -27,9 +30,20 @@ public class MainActivity extends AppCompatActivity implements MoviesListFragmen
 
         setUi();
         setFragments();
+        setViewModel();
 
         //default fragment
         openMoviesListFragment();
+
+        mMovieViewModel.displayMovieExistsPopUpLd().observe(this, new Observer<Boolean>() {
+
+            @Override
+            public void onChanged (Boolean iBoolean) {
+                if (iBoolean) {
+                    // TODO: 3/19/2020 snack-bar
+                }
+            }
+        });
 
 
     }
@@ -42,7 +56,6 @@ public class MainActivity extends AppCompatActivity implements MoviesListFragmen
     private void instantiateFragments () {
         mMoviesListFragment = new MoviesListFragment();
         mMovieDetailsFragment = new MovieDetailsFragment();
-        mQrFragment = new QRFragment();
     }
 
     private void setUi () {
@@ -63,18 +76,28 @@ public class MainActivity extends AppCompatActivity implements MoviesListFragmen
         openMovieDetailsFragment(iMovie);
     }
 
+    @Override
+    public void onFABClicked () {
+        Intent intent = new Intent(MainActivity.this, QRActivity.class);
+        startActivity(intent);
+    }
+
     // TODO: 3/17/2020 make one method to open all fragments
     private void openMoviesListFragment () {
-        mFragmentManager.beginTransaction().replace(R.id.containerFr, mMoviesListFragment).addToBackStack(MoviesListFragment.class.getSimpleName()).commit();
+        mFragmentManager.beginTransaction().replace(R.id.containerFr, mMoviesListFragment).commit();
     }
 
     private void openMovieDetailsFragment (Movie iMovie) {
-        mMovieDetailsFragment.setMovie(iMovie);
+        mMovieDetailsFragment.setMovie(iMovie);// TODO: 3/17/2020 find better way this crashes some time
         mFragmentManager.beginTransaction().replace(R.id.containerFr, mMovieDetailsFragment).addToBackStack(MoviesListFragment.class.getSimpleName()).commit();
     }
 
-    private void openQRFragment () {
-        mFragmentManager.beginTransaction().replace(R.id.containerFr, mMovieDetailsFragment).addToBackStack(MoviesListFragment.class.getSimpleName()).commit();
+    //todo
+    //make one util function for this
+    private void setViewModel () {
+        mMovieViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication())).get(MovieViewModel.class);
     }
 
 }
+
+
