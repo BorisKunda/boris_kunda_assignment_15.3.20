@@ -1,7 +1,6 @@
 package com.assignment.boris_kunda_assignment_15320.ui.fragments;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,7 +43,6 @@ public class MovieDetailsFragment extends Fragment {
     }
 
     private void initUi (View iView) {
-        Log.e(getClass().getSimpleName(), "initUi");
         mPosterIv = iView.findViewById(R.id.movie_details_poster_iv);
         mTitleTv = iView.findViewById(R.id.movie_details_title_tv);
         mRatingTv = iView.findViewById(R.id.movie_details_rating_tv);

@@ -13,7 +13,8 @@ import java.util.List;
 
 public class MovieViewModel extends AndroidViewModel {
 
-    // TODO: 3/19/2020 check about single Live-data
+    // TODO: 3/19/2020 check about single Live-data for popup
+    //todo pass next screen only if load db/api successful
 
 
     private MovieRepository mMovieRepository;
@@ -25,7 +26,6 @@ public class MovieViewModel extends AndroidViewModel {
 
     }
 
-    //getters
     public LiveData<List<Movie>> getMovieListLD () {
         return mMovieRepository.getMoviesListLD();
     }
@@ -34,7 +34,6 @@ public class MovieViewModel extends AndroidViewModel {
         return mMovieRepository.displayMovieAlreadyExistsPopUpMd();
     }
 
-    //actions
     public void loadMoviesList () {
         mMovieRepository.loadMoviesListFromApi();
     }

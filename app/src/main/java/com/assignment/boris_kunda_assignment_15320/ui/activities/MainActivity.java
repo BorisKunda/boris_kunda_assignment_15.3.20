@@ -2,8 +2,10 @@ package com.assignment.boris_kunda_assignment_15320.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
@@ -15,6 +17,7 @@ import com.assignment.boris_kunda_assignment_15320.model.Movie;
 import com.assignment.boris_kunda_assignment_15320.ui.fragments.MovieDetailsFragment;
 import com.assignment.boris_kunda_assignment_15320.ui.fragments.MoviesListFragment;
 import com.assignment.boris_kunda_assignment_15320.viewmodel.MovieViewModel;
+import com.google.android.material.snackbar.Snackbar;
 
 public class MainActivity extends AppCompatActivity implements MoviesListFragment.OnListItemClickedListener, MoviesListFragment.OnFABClickedListener {
 
@@ -40,7 +43,18 @@ public class MainActivity extends AppCompatActivity implements MoviesListFragmen
             @Override
             public void onChanged (Boolean iBoolean) {
                 if (iBoolean) {
-                    // TODO: 3/19/2020 snack-bar
+                    LinearLayout linearLayout = findViewById(R.id.containerFr);
+
+                    Snackbar.make(linearLayout, R.string.movie_is_in_db_already_pop_up, Snackbar.LENGTH_INDEFINITE)
+                            .setAction("ok", new View.OnClickListener() {
+
+                                @Override
+                                public void onClick (View v) {
+                                    //snackbar action
+                                }
+                            })
+                            .setActionTextColor(getResources().getColor(R.color.colorAccent))
+                            .show();
                 }
             }
         });

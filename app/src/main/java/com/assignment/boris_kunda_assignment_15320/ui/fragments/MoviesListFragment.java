@@ -19,9 +19,6 @@ import com.assignment.boris_kunda_assignment_15320.ui.adapters.MovieAdapter;
 import com.assignment.boris_kunda_assignment_15320.viewmodel.MovieViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class MoviesListFragment extends Fragment implements MovieAdapter.OnMovieClickListener {
 
     private MovieViewModel mMovieViewModel;
@@ -68,13 +65,7 @@ public class MoviesListFragment extends Fragment implements MovieAdapter.OnMovie
 
     private void setFab (View v) {
         mFloatingActionButton = v.findViewById(R.id.movies_fab);
-        mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick (View v) {
-                mOnFABClickedListener.onFABClicked();
-            }
-        });
+        mFloatingActionButton.setOnClickListener(v1 -> mOnFABClickedListener.onFABClicked());
     }
 
     private void setRV (View v) {

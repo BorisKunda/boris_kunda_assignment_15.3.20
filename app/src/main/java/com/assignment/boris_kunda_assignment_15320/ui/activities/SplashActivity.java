@@ -3,7 +3,6 @@ package com.assignment.boris_kunda_assignment_15320.ui.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -19,7 +18,7 @@ public class SplashActivity extends AppCompatActivity {
 
     private Handler mHandler;
     private Intent mMainActivityIntent;
-    private final int SPLASH_TIME = 0;
+    private final int SPLASH_TIME = 666000;
     private MovieViewModel mMovieViewModel;
 
     @Override
@@ -27,9 +26,7 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-       mMovieViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication())).get(MovieViewModel.class);
-
-
+        mMovieViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication())).get(MovieViewModel.class);
 
         mMovieViewModel.getMovieListLD().observe(this, iMovies -> {
             if (iMovies.size() == 0) {
@@ -44,8 +41,8 @@ public class SplashActivity extends AppCompatActivity {
 
         mHandler.postDelayed(() -> {
             mMainActivityIntent = new Intent(SplashActivity.this, MainActivity.class);
-             finish();
-              startActivity(mMainActivityIntent);
+            finish();
+            startActivity(mMainActivityIntent);
         }, SPLASH_TIME);
 
     }

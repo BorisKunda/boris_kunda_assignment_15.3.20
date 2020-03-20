@@ -42,8 +42,8 @@ ext {
     espresso_core = "3.2.0"
     test_ext_junit ="1.1.1"
     picasso = "2.71828"
-    zxing = "3.4.0"
     gms_play_services_vision = "19.0.0"
+    lottieVersion = "3.4.0"
 }
 
 
