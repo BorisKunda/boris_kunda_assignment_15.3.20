@@ -3,7 +3,6 @@ package com.assignment.boris_kunda_assignment_15320.ui.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.util.Log;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -84,7 +83,6 @@ public class SplashActivity extends AppCompatActivity {
         });
         builder.setNegativeButton("close app", (dialog, id) -> {
             finish();
-            Log.e(getClass().getSimpleName(), "onClick");
         });
 
         mAlertDialog = builder.create();

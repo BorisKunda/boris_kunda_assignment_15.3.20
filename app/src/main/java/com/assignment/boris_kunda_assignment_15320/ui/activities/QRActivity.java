@@ -3,10 +3,12 @@ package com.assignment.boris_kunda_assignment_15320.ui.activities;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.ViewModelProvider;
@@ -20,16 +22,15 @@ import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 import com.google.gson.Gson;
 
-import java.io.IOException;
-
 public class QRActivity extends AppCompatActivity {
 
 
     private SurfaceView mSurfaceView;
-    private BarcodeDetector mBarcodeDetector;
     private CameraSource mCameraSource;
     private static final int REQUEST_CAMERA_PERMISSION = 201;
     private MovieViewModel mMovieViewModel;
+    private BarcodeDetector mBarcodeDetector;
+    private SurfaceHolder mSurfaceHolder;
 
 
     @Override
@@ -38,16 +39,20 @@ public class QRActivity extends AppCompatActivity {
         setContentView(R.layout.activity_q_r);
 
         initViews();
-        initialiseDetectorsAndSources();
-        initViewModel();
+        initMainComponents();
+        listenToSurfaceUpdates();
+        receiveBarcodeDetections();
+        checkCameraPermission();
 
     }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private void initViews () {
         mSurfaceView = findViewById(R.id.surfaceView);
     }
 
-    private void initialiseDetectorsAndSources () {
+    private void initMainComponents () {
 
         mBarcodeDetector = new BarcodeDetector.Builder(this)
                 .setBarcodeFormats(Barcode.ALL_FORMATS)
@@ -58,43 +63,49 @@ public class QRActivity extends AppCompatActivity {
                 .setAutoFocusEnabled(true)
                 .build();
 
+        mMovieViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication())).get(MovieViewModel.class);
+    }
+
+    private void listenToSurfaceUpdates () {
         mSurfaceView.getHolder().addCallback(new SurfaceHolder.Callback() {
 
             @Override
             public void surfaceCreated (SurfaceHolder holder) {
-                try {
-                    if (ActivityCompat.checkSelfPermission(QRActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-                        mCameraSource.start(mSurfaceView.getHolder());
-                    } else {
-                        ActivityCompat.requestPermissions(QRActivity.this, new
-                                String[]{ Manifest.permission.CAMERA }, REQUEST_CAMERA_PERMISSION);
-                    }
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                Log.e("surfaceCreated", "surfaceCreated");
+                mSurfaceHolder = holder;
 
 
             }
 
             @Override
             public void surfaceChanged (SurfaceHolder holder, int format, int width, int height) {
+                Log.e("surface changed", "surfaceChanged");
             }
 
             @Override
             public void surfaceDestroyed (SurfaceHolder holder) {
-                mCameraSource.stop();
+                Log.e("surfaceDestroyed", "surfaceDestroyed");
+                mSurfaceHolder = null;
+                //   mCameraSource.stop();
             }
         });
+
+    }
+
+    private void receiveBarcodeDetections () {
+
 
         mBarcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
 
             @Override
             public void release () {
+                Log.e("release", "release");
             }
 
             @Override
             public void receiveDetections (Detector.Detections<Barcode> detections) {
+                Log.e("release", "release2");
+
                 final SparseArray<Barcode> barcodes = detections.getDetectedItems();
                 if (barcodes.size() != 0) {
                     Gson gson = new Gson();
@@ -110,17 +121,57 @@ public class QRActivity extends AppCompatActivity {
     @Override
     protected void onPause () {
         super.onPause();
+        Log.e("onPause", "onPause");
         mCameraSource.release();
     }
 
     @Override
     protected void onResume () {
         super.onResume();
-        initialiseDetectorsAndSources();
+
+        //        if (isCameraPerGranted() && mSurfaceHolder != null) {
+        //            try {
+        //                mCameraSource.start(mSurfaceHolder);
+        //            } catch (IOException iE) {
+        //                iE.printStackTrace();
+        //            }
+        //        }
+
+        Log.e("onResume", "onResume");
     }
 
-    private void initViewModel () {
-        mMovieViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication())).get(MovieViewModel.class);
+    private void checkCameraPermission () {
+
+        if (ActivityCompat.checkSelfPermission(QRActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+            //    perGranted = true;
+        } else {
+            ActivityCompat.requestPermissions(QRActivity.this, new
+                    String[]{ Manifest.permission.CAMERA }, REQUEST_CAMERA_PERMISSION);
+            // perGranted = false;
+        }
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult (int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        Log.e("onRequestPermissionsResult", "onRequestPermissionsResult");
+
+        if (requestCode == REQUEST_CAMERA_PERMISSION) {
+
+
+            //            if (grantResults.length > 0 && grantResults[ 0 ] == PackageManager.PERMISSION_GRANTED) {
+            //                try {
+            //                   // mCameraSource.start();
+            //                } catch (IOException iE) {
+            //                    iE.printStackTrace();
+            //                }
+            //            }
+        } else {
+
+        }
+
     }
 
 }

@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements MoviesListFragmen
                                 }
                             })
                             .setActionTextColor(getResources().getColor(R.color.colorAccent))
-                            .show();
+                            .show();// TODO: 3/21/2020 single-live data
                 }
             }
         });
