@@ -101,6 +101,7 @@ public class QRActivity extends AppCompatActivity {
 
             @Override
             public void surfaceDestroyed (SurfaceHolder holder) {
+                Log.e("surfaceDestroyed", "surfaceDestroyed");
                 mSurfaceHolder = null;
                 mCameraSource.stop();
             }
@@ -115,6 +116,7 @@ public class QRActivity extends AppCompatActivity {
 
             @Override
             public void release () {
+                Log.e("release", "release");
             }
 
             @Override
@@ -123,12 +125,12 @@ public class QRActivity extends AppCompatActivity {
 
                 final SparseArray<Barcode> barcodes = detections.getDetectedItems();
                 if (barcodes.size() != 0) {
-
-                    Log.e("receiveDetectionsS", "receiveDetectionsS");
-
+                    Log.e("receiveDetections", "receiveDetectionsS");
                     Gson gson = new Gson();
                     Movie qrMovie = gson.fromJson(barcodes.valueAt(0).displayValue, Movie.class);
                     mMovieViewModel.updateDbOrDisplayPopUp(qrMovie);
+                    Log.e("receiveDetections", "receiveDetectionsS2");
+                    mBarcodeDetector.release();
                     finish();
                 }
             }

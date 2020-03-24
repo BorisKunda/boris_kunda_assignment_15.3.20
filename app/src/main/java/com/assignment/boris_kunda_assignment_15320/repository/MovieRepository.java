@@ -9,6 +9,7 @@ import com.assignment.boris_kunda_assignment_15320.database.MovieDao;
 import com.assignment.boris_kunda_assignment_15320.database.MovieDatabase;
 import com.assignment.boris_kunda_assignment_15320.model.Movie;
 import com.assignment.boris_kunda_assignment_15320.network.MovieApi;
+import com.assignment.boris_kunda_assignment_15320.viewmodel.SingleLiveEvent;
 import com.google.gson.Gson;
 
 import java.util.Arrays;
@@ -23,7 +24,7 @@ public class MovieRepository {
     private MovieDatabase mMovieDatabase;
     private MovieDao mDao;
     private ExecutorService mExecutorService;
-    private MutableLiveData<Boolean> mDisplayMovieAlreadyExistsPopUpMd;
+    private SingleLiveEvent<Boolean> mDisplayMovieAlreadyExistsPopUpMd;
 
 
     private MovieRepository (Application iApplication) {
@@ -31,7 +32,7 @@ public class MovieRepository {
         mMovieDatabase = MovieDatabase.getMovieDatabase(iApplication);
         mDao = mMovieDatabase.getMovieDao();
         mExecutorService = Executors.newSingleThreadExecutor();
-        mDisplayMovieAlreadyExistsPopUpMd = new MutableLiveData<>();
+        mDisplayMovieAlreadyExistsPopUpMd = new SingleLiveEvent<>();
     }
 
     public static MovieRepository getMovieRepository (Application iApplication) {
@@ -77,7 +78,7 @@ public class MovieRepository {
         }
     }
 
-    public MutableLiveData<Boolean> displayMovieAlreadyExistsPopUpMd () {
+    public SingleLiveEvent<Boolean> displayMovieAlreadyExistsPopUpMd () {
         return mDisplayMovieAlreadyExistsPopUpMd;
     }
 

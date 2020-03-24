@@ -50,7 +50,6 @@ public class MainActivity extends AppCompatActivity implements MoviesListFragmen
 
                                 @Override
                                 public void onClick (View v) {
-                                    //snackbar action
                                 }
                             })
                             .setActionTextColor(getResources().getColor(R.color.colorAccent))
