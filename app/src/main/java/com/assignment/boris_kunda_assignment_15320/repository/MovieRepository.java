@@ -21,7 +21,6 @@ public class MovieRepository {
 
     private static MovieRepository mMovieRepository = null;
     private MovieApi mCountryApi;
-    private MovieDatabase mMovieDatabase;
     private MovieDao mDao;
     private ExecutorService mExecutorService;
     private SingleLiveEvent<Boolean> mDisplayMovieAlreadyExistsPopUpMd;
@@ -29,8 +28,8 @@ public class MovieRepository {
 
     private MovieRepository (Application iApplication) {
         mCountryApi = MovieApi.getMovieApi(iApplication);
-        mMovieDatabase = MovieDatabase.getMovieDatabase(iApplication);
-        mDao = mMovieDatabase.getMovieDao();
+        MovieDatabase movieDatabase = MovieDatabase.getMovieDatabase(iApplication);
+        mDao = movieDatabase.getMovieDao();
         mExecutorService = Executors.newSingleThreadExecutor();
         mDisplayMovieAlreadyExistsPopUpMd = new SingleLiveEvent<>();
     }
@@ -57,14 +56,9 @@ public class MovieRepository {
         mCountryApi.requestMovieList((isSuccess, response) -> {
 
             if (isSuccess) {
-
                 Gson gson = new Gson();
                 Movie[] movies = gson.fromJson(String.valueOf(response), Movie[].class);
-
                 mExecutorService.execute(() -> mDao.insertAllMovies(Arrays.asList(movies)));
-
-            } else {
-                // TODO: 3/15/2020 take care of error
             }
 
         });

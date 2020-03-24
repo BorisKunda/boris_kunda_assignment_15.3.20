@@ -3,12 +3,9 @@ package com.assignment.boris_kunda_assignment_15320.ui.activities;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.SparseArray;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.view.Window;
-import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -16,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.assignment.boris_kunda_assignment_15320.AppUtils;
 import com.assignment.boris_kunda_assignment_15320.R;
 import com.assignment.boris_kunda_assignment_15320.model.Movie;
 import com.assignment.boris_kunda_assignment_15320.viewmodel.MovieViewModel;
@@ -50,8 +48,7 @@ public class QRActivity extends AppCompatActivity {
         receiveBarcodeDetections();
         checkCameraPermission();
         getSupportActionBar().hide();
-        setStatusBarColor();
-
+        AppUtils.setStatusBarColor(getWindow(), getResources());
     }
 
     private void initViews () {
@@ -98,7 +95,6 @@ public class QRActivity extends AppCompatActivity {
 
             @Override
             public void surfaceDestroyed (SurfaceHolder holder) {
-                Log.e("surfaceDestroyed", "surfaceDestroyed");
                 mSurfaceHolder = null;
                 mCameraSource.stop();
             }
@@ -113,20 +109,15 @@ public class QRActivity extends AppCompatActivity {
 
             @Override
             public void release () {
-                Log.e("release", "release");
             }
 
             @Override
             public void receiveDetections (Detector.Detections<Barcode> detections) {
-                Log.e("receiveDetections", "receiveDetections");
-
                 final SparseArray<Barcode> barcodes = detections.getDetectedItems();
                 if (barcodes.size() != 0) {
-                    Log.e("receiveDetections", "receiveDetectionsS");
                     Gson gson = new Gson();
                     Movie qrMovie = gson.fromJson(barcodes.valueAt(0).displayValue, Movie.class);
                     mMovieViewModel.updateDbOrDisplayPopUp(qrMovie);
-                    Log.e("receiveDetections", "receiveDetectionsS2");
                     mBarcodeDetector.release();
                     finish();
                 }
@@ -138,24 +129,11 @@ public class QRActivity extends AppCompatActivity {
     @Override
     protected void onPause () {
         super.onPause();
-        Log.e("onPause", "onPause");
-        //   mCameraSource.release();
     }
 
     @Override
     protected void onResume () {
         super.onResume();
-
-        Log.e("onResume", "onResume");
-
-        //        if (mIsPermissionGranted) {
-        //            try {
-        //                mCameraSource.start();
-        //            } catch (Exception iE) {
-        //                iE.printStackTrace();
-        //            }
-        //        }
-
     }
 
     private void checkCameraPermission () {
@@ -186,14 +164,8 @@ public class QRActivity extends AppCompatActivity {
 
             } else {
 
-
-                Log.e("onRequestPermissionsResult", "onRequestPermissionsResult");
-
                 if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
 
-                    Log.e("onRequestPermissionsResult", "onRequestPermissionsResult");
-
-                    // TODO: 3/24/2020 finish this
                     new AlertDialog.Builder(this).
                             setIcon(R.drawable.alert_ic).
                             setTitle("Permission Required").
@@ -208,14 +180,6 @@ public class QRActivity extends AppCompatActivity {
             }
 
         }
-        }
-
-        private void setStatusBarColor () {
-            // TODO: 3/16/2020 check this code and make activity white like android default white color
-            Window window = getWindow();
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            window.setStatusBarColor(getResources().getColor(R.color.grey));
-        }
-
     }
+
+}

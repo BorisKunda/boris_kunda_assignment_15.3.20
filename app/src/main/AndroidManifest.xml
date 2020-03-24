@@ -22,9 +22,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.activities.QRActivity"
+        <activity
+            android:name=".ui.activities.QRActivity"
             android:screenOrientation="portrait"
-            >
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
         <activity
