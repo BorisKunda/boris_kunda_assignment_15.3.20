@@ -1,7 +1,6 @@
 package com.assignment.boris_kunda_assignment_15320.ui.activities;
 
 import android.Manifest;
-import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -54,8 +53,6 @@ public class QRActivity extends AppCompatActivity {
         setStatusBarColor();
 
     }
-
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private void initViews () {
         mSurfaceView = findViewById(R.id.surfaceView);
@@ -187,48 +184,38 @@ public class QRActivity extends AppCompatActivity {
                     iE.printStackTrace();
                 }
 
+            } else {
+
+
+                Log.e("onRequestPermissionsResult", "onRequestPermissionsResult");
+
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
+
+                    Log.e("onRequestPermissionsResult", "onRequestPermissionsResult");
+
+                    // TODO: 3/24/2020 finish this
+                    new AlertDialog.Builder(this).
+                            setIcon(R.drawable.alert_ic).
+                            setTitle("Permission Required").
+                            setMessage("Current feature is not available without Camera Permission").
+                            setPositiveButton("OK", (dialog, which) -> ActivityCompat.requestPermissions(QRActivity.this, new
+                                    String[]{ Manifest.permission.CAMERA }, REQUEST_CAMERA_PERMISSION)).
+                            setNegativeButton("CANCEL", (dialog, which) -> finish()).create().show();
+
+                }
+
+
             }
 
-        } else {
+        }
+        }
 
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
-                // TODO: 3/24/2020 finish this
-                new AlertDialog.Builder(this).
-                        setIcon(R.drawable.alert).
-                        setTitle("Permission Required").
-                        setMessage("Current feature is not available without Camera Permission").
-                        setPositiveButton("OK", (dialog, which) -> ActivityCompat.requestPermissions(QRActivity.this, new
-                                String[]{ Manifest.permission.CAMERA }, REQUEST_CAMERA_PERMISSION)).
-                        setNegativeButton("NO", (dialog, which) -> finish()).create().show();
-
-            }
-
-            //
-            //            AlertDialog.Builder builder = new AlertDialog.Builder(SplashActivity.this);
-            //            // Add the buttons
-            //            builder.setPositiveButton("retry", (dialog, id) -> {
-            //                mMovieViewModel.loadMoviesList();
-            //                mCountDownTimer.start();
-            //            });
-            //            builder.setNegativeButton("close app", (dialog, id) -> {
-            //                finish();
-            //            });
-            //
-            //            mAlertDialog = builder.create();
-            //            mAlertDialog.setIcon(R.drawable.error);
-            //            mAlertDialog.setTitle("Error");
-            //            mAlertDialog.setMessage("Something wrong please try again");
-
+        private void setStatusBarColor () {
+            // TODO: 3/16/2020 check this code and make activity white like android default white color
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.setStatusBarColor(getResources().getColor(R.color.grey));
         }
 
     }
-
-    private void setStatusBarColor () {
-        // TODO: 3/16/2020 check this code and make activity white like android default white color
-        Window window = getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        window.setStatusBarColor(getResources().getColor(R.color.grey));
-    }
-
-}

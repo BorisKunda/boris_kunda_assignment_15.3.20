@@ -51,8 +51,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     class MovieViewHolder extends RecyclerView.ViewHolder {
 
-        TextView mMovieTitleTv;   // TODO: 3/17/2020 check if thes variables can be set to private
-        private ImageView mMoviePosterIv;   // TODO: 3/17/2020 check if thes variables can be set to private
+        TextView mMovieTitleTv;
+        private ImageView mMoviePosterIv;
 
         MovieViewHolder (@NonNull View itemView) {
             super(itemView);

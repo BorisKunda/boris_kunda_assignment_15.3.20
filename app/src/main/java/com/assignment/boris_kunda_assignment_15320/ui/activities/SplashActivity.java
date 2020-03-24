@@ -81,15 +81,13 @@ public class SplashActivity extends AppCompatActivity {
     private void buildDialog () {
         AlertDialog.Builder builder = new AlertDialog.Builder(SplashActivity.this);
         // Add the buttons
-        builder.setPositiveButton("retry", (dialog, id) -> {
+        builder.setPositiveButton("RETRY", (dialog, id) -> {
             mMovieViewModel.loadMoviesList();
             mCountDownTimer.start();
         });
-        builder.setNegativeButton("close app", (dialog, id) -> {
+        builder.setNegativeButton("CLOSE", (dialog, id) -> {
             finish();
         });
-
-
 
         mAlertDialog = builder.create();
         mAlertDialog.setIcon(R.drawable.error);
