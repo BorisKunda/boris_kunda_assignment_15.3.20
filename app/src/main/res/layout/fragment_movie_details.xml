@@ -7,40 +7,60 @@
     tools:context=".ui.fragments.MovieDetailsFragment">
 
     <ImageView
-        tools:src="@drawable/movie_place_holder"
-        android:scaleType="centerCrop"
         android:id="@+id/movie_details_poster_iv"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:orientation="vertical" />
+        android:orientation="vertical"
+        android:scaleType="centerCrop"
+        tools:src="@drawable/movie_place_holder" />
 
     <LinearLayout
-        android:padding="5dp"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="5dp">
 
         <TextView
             android:id="@+id/movie_details_title_tv"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/aclonica"
+            android:gravity="center"
+            android:textSize="20sp"
+            tools:text="aaaaaaaaaaaaaaaaaa" />
 
         <TextView
+            android:textSize="18sp"
+            android:layout_marginTop="10dp"
             android:id="@+id/movie_details_rating_tv"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:fontFamily="casual"
+            android:gravity="center"
+            tools:text="aaaaaaaaaaaaaaaaaa" />
 
         <TextView
+            android:textSize="18sp"
+            android:layout_marginTop="10dp"
             android:id="@+id/movie_details_release_year_tv"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:fontFamily="casual"
+            android:gravity="center"
+            tools:text="aaaaaaaaaaaaaaaaaa" />
 
         <TextView
+            android:textSize="18sp"
+            android:layout_marginTop="10dp"
             android:id="@+id/movie_details_genres_tv"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:fontFamily="casual"
+            android:gravity="center"
+            tools:text="aaaaaaaaaaaaaaaaaa" />
 
     </LinearLayout>
 

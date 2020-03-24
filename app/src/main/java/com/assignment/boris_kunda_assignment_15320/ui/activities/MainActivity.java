@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements MoviesListFragmen
         Window window = getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        window.setStatusBarColor(getResources().getColor(R.color.white));
+        window.setStatusBarColor(getResources().getColor(R.color.grey));
     }
 
     @Override
@@ -111,6 +111,8 @@ public class MainActivity extends AppCompatActivity implements MoviesListFragmen
     private void setViewModel () {
         mMovieViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication())).get(MovieViewModel.class);
     }
+
+
 
 }
 

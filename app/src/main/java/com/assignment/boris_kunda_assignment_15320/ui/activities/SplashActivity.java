@@ -3,6 +3,8 @@ package com.assignment.boris_kunda_assignment_15320.ui.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.view.Window;
+import android.view.WindowManager;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,6 +33,8 @@ public class SplashActivity extends AppCompatActivity {
         buildDialog();
         setCountDown();
         mCountDownTimer.start();
+        getSupportActionBar().hide();
+        setStatusBarColor();
 
     }
 
@@ -85,11 +89,20 @@ public class SplashActivity extends AppCompatActivity {
             finish();
         });
 
+
+
         mAlertDialog = builder.create();
         mAlertDialog.setIcon(R.drawable.error);
         mAlertDialog.setTitle("Error");
         mAlertDialog.setMessage("Something wrong please try again");
     }
 
+    private void setStatusBarColor () {
+        // TODO: 3/16/2020 check this code and make activity white like android default white color
+        Window window = getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(getResources().getColor(R.color.grey));
+    }
 
 }
